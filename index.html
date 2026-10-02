@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#030303">
+<title>Mi Dulce Lunita de Octubre</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 8%, rgba(120,88,20,.18), transparent 27%),
+        radial-gradient(circle at 20% 80%, rgba(78,30,110,.12), transparent 25%),
+        #020202;
+    color:#d9b65b;
+    font-family:'Montserrat', sans-serif;
+    overflow-x:hidden;
+    position:relative;
+}
+
+/* AGUA / REFLEJOS DEL FONDO */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.27;
+    background:
+        repeating-linear-gradient(
+            174deg,
+            transparent 0px,
+            transparent 11px,
+            rgba(215,181,91,.045) 12px,
+            transparent 14px,
+            transparent 25px
+        );
+    animation:water 9s ease-in-out infinite alternate;
+    z-index:0;
+}
+
+@keyframes water{
+    from{
+        transform:translateY(-4px) scaleX(1);
+        filter:blur(.2px);
+    }
+    to{
+        transform:translateY(5px) scaleX(1.04);
+        filter:blur(1px);
+    }
+}
+
+/* REFLEJO DORADO COMO AGUA */
+.water-glow{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    height:45%;
+    pointer-events:none;
+    opacity:.22;
+    background:
+        repeating-linear-gradient(
+            175deg,
+            transparent 0 9px,
+            rgba(222,188,94,.08) 10px,
+            transparent 12px 20px
+        );
+    mask-image:linear-gradient(to bottom, transparent, black);
+    -webkit-mask-image:linear-gradient(to bottom, transparent, black);
+    animation:ripple 7s ease-in-out infinite alternate;
+    z-index:0;
+}
+
+@keyframes ripple{
+    from{transform:translateX(-8px);}
+    to{transform:translateX(8px);}
+}
+
+/* HUELLITAS DECORATIVAS */
+.paw{
+    position:fixed;
+    color:#b99542;
+    opacity:.12;
+    font-size:28px;
+    z-index:1;
+    user-select:none;
+    pointer-events:none;
+}
+
+.p1{top:12%;left:5%;transform:rotate(-25deg);}
+.p2{top:30%;right:6%;transform:rotate(22deg);}
+.p3{top:56%;left:4%;transform:rotate(-15deg);}
+.p4{top:74%;right:7%;transform:rotate(28deg);}
+.p5{top:90%;left:11%;transform:rotate(-20deg);}
+
+/* CONTENEDOR */
+.container{
+    width:min(92%,760px);
+    margin:auto;
+    position:relative;
+    z-index:2;
+    padding:34px 0 55px;
+}
+
+/* CABECERA */
+.header{
+    text-align:center;
+    margin-bottom:30px;
+    animation:fadeDown 1.2s ease both;
+}
+
+.moon{
+    width:55px;
+    height:55px;
+    margin:0 auto 15px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#f8dc8a,#9f7422);
+    box-shadow:
+        0 0 18px rgba(220,181,76,.4),
+        0 0 45px rgba(220,181,76,.12);
+    position:relative;
+}
+
+.moon::after{
+    content:"";
+    position:absolute;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#020202;
+    left:15px;
+    top:-7px;
+}
+
+.kitty{
+    font-size:24px;
+    letter-spacing:7px;
+    color:#caa451;
+    margin-bottom:10px;
+}
+
+.date{
+    font-family:'Cinzel',serif;
+    font-size:11px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#9f8243;
+}
+
+/* RECUADRO DE IMAGEN */
+.photo-card{
+    position:relative;
+    border:1px solid rgba(204,169,78,.55);
+    padding:8px;
+    background:rgba(8,8,8,.88);
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.025) inset,
+        0 0 35px rgba(190,147,45,.10);
+    overflow:hidden;
+    animation:appear 1.4s ease .15s both;
+}
+
+.photo-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border:1px solid rgba(255,221,135,.08);
+    pointer-events:none;
+}
+
+.photo-frame{
+    position:relative;
+    overflow:hidden;
+    aspect-ratio:16/9;
+    background:
+        radial-gradient(circle,#282014 0%,#080705 65%,#020202 100%);
+}
+
+.photo-frame img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    filter:
+        brightness(.82)
+        contrast(1.05)
+        saturate(.8);
+}
+
+/* BRILLO SOBRE LA FOTO */
+.photo-frame::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(
+            125deg,
+            transparent 20%,
+            rgba(255,226,146,.11) 48%,
+            transparent 62%
+        );
+    transform:translateX(-100%);
+    animation:shine 7s ease-in-out infinite;
+}
+
+@keyframes shine{
+    0%,55%{transform:translateX(-100%);}
+    75%,100%{transform:translateX(100%);}
+}
+
+.photo-caption{
+    text-align:center;
+    padding:13px 5px 8px;
+    font-family:'Cinzel',serif;
+    font-size:10px;
+    letter-spacing:3px;
+    color:#c9a957;
+}
+
+/* CARTA */
+.letter{
+    position:relative;
+    margin-top:27px;
+    padding:34px 25px 38px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(14,12,9,.97),
+            rgba(3,3,3,.98)
+        );
+    border:1px solid rgba(198,161,72,.35);
+    box-shadow:
+        0 0 30px rgba(196,155,55,.08),
+        inset 0 0 35px rgba(255,255,255,.015);
+    animation:appear 1.4s ease .35s both;
+}
+
+/* DECORACIÓN GATUNA */
+.letter::before,
+.letter::after{
+    position:absolute;
+    font-size:18px;
+    color:#b89545;
+    opacity:.65;
+}
+
+.letter::before{
+    content:"♢  𓃠";
+    top:13px;
+    left:18px;
+}
+
+.letter::after{
+    content:"𓃠  ♢";
+    bottom:13px;
+    right:18px;
+}
+
+.letter p{
+    font-size:15px;
+    line-height:1.95;
+    font-weight:300;
+    color:#d5bd82;
+    margin-bottom:22px;
+    text-shadow:
+        0 7px 10px rgba(212,176,79,.12),
+        0 14px 18px rgba(212,176,79,.06);
+}
+
+.letter p:first-child{
+    font-family:'Cinzel',serif;
+    font-size:20px;
+    line-height:1.5;
+    color:#e0bd65;
+    text-align:center;
+    margin-bottom:28px;
+    letter-spacing:.5px;
+}
+
+.letter strong{
+    color:#e7c96f;
+    font-weight:600;
+    text-shadow:
+        0 0 9px rgba(222,183,83,.16),
+        0 10px 15px rgba(222,183,83,.08);
+}
+
+/* FIRMA */
+.signature{
+    margin-top:31px;
+    padding-top:25px;
+    border-top:1px solid rgba(205,168,77,.18);
+    text-align:center;
+}
+
+.signature strong{
+    display:block;
+    font-family:'Cinzel',serif;
+    font-size:14px;
+    letter-spacing:2px;
+    color:#d9b35a;
+    line-height:1.8;
+}
+
+/* FRASE FINAL NEÓN */
+.final-love{
+    margin-top:30px;
+    padding:30px 20px;
+    text-align:center;
+    position:relative;
+    border:1px solid rgba(170,72,255,.35);
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(117,35,178,.13),
+            transparent 72%
+        );
+    box-shadow:
+        0 0 22px rgba(137,51,211,.12),
+        inset 0 0 25px rgba(137,51,211,.06);
+}
+
+.final-love::before{
+    content:"✦";
+    position:absolute;
+    top:-11px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#030303;
+    padding:0 12px;
+    color:#bd70ff;
+    text-shadow:0 0 13px #9e43e8;
+}
+
+.final-love p{
+    margin-bottom:18px;
+    font-size:14px;
+    line-height:1.9;
+    color:#d5bde2;
+    text-shadow:0 0 9px rgba(170,77,240,.25);
+}
+
+.final-love .passion{
+    color:#e0aaff;
+    font-family:'Cinzel',serif;
+    font-size:16px;
+    line-height:1.85;
+    text-shadow:
+        0 0 8px rgba(190,80,255,.7),
+        0 0 22px rgba(145,45,220,.35);
+}
+
+.final-love .big-love{
+    margin-top:21px;
+    color:#e5aaff;
+    font-family:'Cinzel',serif;
+    font-size:18px;
+    font-weight:600;
+    letter-spacing:1px;
+    text-shadow:
+        0 0 7px #b64dff,
+        0 0 18px rgba(178,64,255,.75),
+        0 0 35px rgba(146,37,215,.4);
+}
+
+/* BOTÓN */
+.poem-area{
+    text-align:center;
+    margin-top:35px;
+}
+
+.poem-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-width:245px;
+    padding:15px 22px;
+    border:1px solid rgba(210,171,79,.65);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(211,174,79,.12),
+            rgba(88,59,15,.22)
+        );
+    color:#dfbd67;
+    text-decoration:none;
+    font-family:'Cinzel',serif;
+    font-size:11px;
+    letter-spacing:2px;
+    box-shadow:
+        0 0 20px rgba(215,175,76,.09);
+    transition:.35s ease;
+}
+
+.poem-button:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 0 28px rgba(215,175,76,.25);
+    background:rgba(207,167,69,.16);
+}
+
+.poem-button span{
+    font-size:17px;
+}
+
+/* PIE */
+.footer{
+    text-align:center;
+    margin-top:30px;
+    font-size:9px;
+    letter-spacing:3px;
+    color:#67552e;
+}
+
+/* ANIMACIONES */
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-18px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* MÓVIL */
+@media(max-width:600px){
+
+    .container{
+        width:91%;
+        padding-top:25px;
+    }
+
+    .moon{
+        width:47px;
+        height:47px;
+    }
+
+    .moon::after{
+        width:47px;
+        height:47px;
+        left:13px;
+    }
+
+    .kitty{
+        font-size:20px;
+    }
+
+    .date{
+        font-size:9px;
+        letter-spacing:3px;
+    }
+
+    .letter{
+        padding:30px 19px 35px;
+    }
+
+    .letter p{
+        font-size:14px;
+        line-height:1.9;
+    }
+
+    .letter p:first-child{
+        font-size:18px;
+    }
+
+    .final-love{
+        padding:27px 16px;
+    }
+
+    .final-love .passion{
+        font-size:14px;
+    }
+
+    .final-love .big-love{
+        font-size:15px;
+        line-height:1.8;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="water-glow"></div>
+
+<div class="paw p1">🐾</div>
+<div class="paw p2">🐾</div>
+<div class="paw p3">🐾</div>
+<div class="paw p4">🐾</div>
+<div class="paw p5">🐾</div>
+
+<main class="container">
+
+    <header class="header">
+
+        <div class="moon"></div>
+
+        <div class="kitty">𓃠　✦　𓃠</div>
+
+        <div class="date">
+            Viernes · 02 · Octubre · 2026
+        </div>
+
+    </header>
+
+
+    <!-- RECUADRO SUPERIOR PARA LA IMAGEN -->
+
+    <section class="photo-card">
+
+        <div class="photo-frame">
+
+            <!-- CAMBIA "noah-octubre.jpg" POR EL NOMBRE DE TU IMAGEN -->
+
+            <img
+                src="noah-octubre.jpg"
+                alt="Un recuerdo especial"
+            >
+
+        </div>
+
+        <div class="photo-caption">
+            UN PEQUEÑO PEDACITO DE MI AMOR PARA TI
+        </div>
+
+    </section>
+
+
+    <!-- CARTA -->
+
+    <article class="letter">
+
+        <p>
+            Mi Dulce Lunita de Octubre,
+        </p>
+
+        <p>
+            Segunda carta de este mes, mi niña… y antes que nada, perdóname por haberte hecho llorar ayer. Solo quería estar a tu lado, y como ibas a trabajar pensé que podía ser bonito darte ese pequeño recuerdo de Noah allí… pero me equivoqué demasiado, amor. Lo siento, mi niña. ❤️‍🩹
+        </p>
+
+        <p>
+            Aun así, espero que en medio de todo hayas sentido cuánto amor había detrás de mis palabras y que te haya gustado que te recordara a nuestro pequeño Noah. Te amo muchísimo, preciosa.
+        </p>
+
+        <p>
+            Sé que esta semana será difícil sin ti, pero intento pensar que mientras más rápido pase, más cerca estaremos de nuestro aniversario. <strong>Faltan solo 15 días.</strong> Y ya estoy intentando imaginar algo bonito para nosotros, aunque todavía no sé si quieres que lo planee o que simplemente dejemos que el día nos sorprenda… creo que alguna vez me dijiste que sí querías que hiciera planes, pero mi memoria a veces se pone de enemiga. 🤭
+        </p>
+
+        <p>
+            Y pensar en estos días me ha devuelto recuerdos preciosos de hace un año… nuestro primer beso, aquellas noches interminables de preguntas y respuestas que, siendo sincero, siento que a veces no te gustaban demasiado, pero aun así te quedabas haciéndolas conmigo. Y eso, mi vida, también es parte de lo que adoro de nuestra historia.
+        </p>
+
+        <p>
+            Esta carta estuvo esperándote desde que comenzó tu mañana, pero quise guardármela hasta tenerte frente a mí… porque esta vez quiero ver tus ojitos cuando la leas.
+        </p>
+
+        <p>
+            <strong>Te amo muchísimo, preciosa.</strong><br>
+            Y para hoy solo quiero pedirle a la vida una cosa:
+        </p>
+
+        <p>
+            que tengamos un hermoso día…<br>
+            y que, aunque esta semana nos ponga un poquito lejos, nunca deje de recordarnos cuánto nos elegimos.
+        </p>
+
+        <p>
+            <strong>Te amo, mi niña. ❤️</strong>
+        </p>
+
+
+        <div class="signature">
+            <strong>
+                VALERIA PETRO VILLAZÓN
+            </strong>
+        </div>
+
+    </article>
+
+
+    <!-- MENSAJE FINAL -->
+
+    <section class="final-love">
+
+        <p class="passion">
+            Si pudiera guardar una sola parte de esta mañana para llevarla
+            conmigo durante toda la vida, elegiría este instante:
+            saber que, en algún lugar de tu día, mi amor consiguió encontrarte.
+            Y si algún día vuelves a mirar estas palabras, quiero que recuerdes
+            que mientras las escribía no estaba pensando solamente en hoy,
+            sino en cada mañana que todavía nos falta vivir juntos.
+        </p>
+
+        <p class="passion">
+            <em>
+                Et je veux croire que notre petit Noah veille sur nous depuis le ciel,
+                qu’il nous accompagne avec tout l’amour que lui avons donné,
+                et qu’il est avec nous partout où nous allons, preciosa.
+            </em>
+        </p>
+
+        <div class="big-love">
+            TE AMO MUCHÍSIMO<br>
+            VALERIA PETRO VILLAZÓN
+        </div>
+
+    </section>
+
+
+    <!-- BOTÓN DEL POEMA -->
+
+    <section class="poem-area">
+
+        <!-- CAMBIA "poema-2-octubre.html" POR EL NOMBRE REAL DE TU POEMA -->
+
+        <a
+            class="poem-button"
+            href="https://j8753741-eng.github.io/Viernes-2-de-octubre-del-2026---poema/"
+        >
+            <span>🐾</span>
+            ABRIR EL POEMA DE HOY
+            <span>🐾</span>
+        </a>
+
+    </section>
+
+
+    <footer class="footer">
+        HECHO CON TODO MI AMOR · OCTUBRE 2026
+    </footer>
+
+</main>
+
+</body>
+  </html>
