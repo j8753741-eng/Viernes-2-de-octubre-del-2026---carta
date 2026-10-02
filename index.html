@@ -160,76 +160,346 @@ body::before{
     color:#9f8243;
 }
 
-/* RECUADRO DE IMAGEN */
-.photo-card{
+/* =====================================================
+   FOTO SUPERIOR HORIZONTAL
+   ===================================================== */
+
+.hero-image{
     position:relative;
-    border:1px solid rgba(204,169,78,.55);
-    padding:8px;
-    background:rgba(8,8,8,.88);
-    box-shadow:
-        0 0 0 1px rgba(255,255,255,.025) inset,
-        0 0 35px rgba(190,147,45,.10);
+    width:100%;
+
+    /* La imagen conserva su proporción */
+    aspect-ratio:16 / 9;
+
+    border-radius:18px;
     overflow:hidden;
-    animation:appear 1.4s ease .15s both;
+
+    border:1px solid rgba(226,194,105,.35);
+
+    background:#050505;
+
+    cursor:pointer;
+
+    isolation:isolate;
 }
 
-.photo-card::before{
+.hero-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    display:block;
+
+    filter:
+        saturate(.8)
+        contrast(1.08)
+        brightness(.82);
+}
+
+.hero-image::after{
     content:"";
     position:absolute;
     inset:0;
-    border:1px solid rgba(255,221,135,.08);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.02) 0%,
+            rgba(0,0,0,.04) 55%,
+            rgba(0,0,0,.32) 100%
+        );
+
+    pointer-events:none;
+    z-index:1;
+}
+
+.cat-mark{
+    position:absolute;
+    z-index:4;
+
+    bottom:16px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:25px;
+    letter-spacing:7px;
+
+    color:#f0d58b;
+
+    text-shadow:
+        0 0 15px rgba(239,203,110,.6);
+
     pointer-events:none;
 }
 
-.photo-frame{
-    position:relative;
-    overflow:hidden;
-    aspect-ratio:16/9;
-    background:
-        radial-gradient(circle,#282014 0%,#080705 65%,#020202 100%);
-}
+/* =====================================================
+   INDICACIÓN PARA ABRIR FOTO
+   ===================================================== */
 
-.photo-frame img{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-    filter:
-        brightness(.82)
-        contrast(1.05)
-        saturate(.8);
-}
-
-/* BRILLO SOBRE LA FOTO */
-.photo-frame::after{
-    content:"";
+.photo-hint{
     position:absolute;
+
+    left:50%;
+    bottom:17px;
+
+    transform:translateX(-50%);
+
+    z-index:5;
+
+    padding:8px 15px;
+
+    border:1px solid rgba(235,203,119,.45);
+    border-radius:30px;
+
+    background:rgba(0,0,0,.58);
+
+    backdrop-filter:blur(7px);
+
+    color:#e8ca7b;
+
+    font-size:8px;
+    letter-spacing:2px;
+
+    white-space:nowrap;
+
+    pointer-events:none;
+
+    opacity:.78;
+}
+
+    /* =====================================================
+   VISOR DE FOTO A PANTALLA COMPLETA
+   ===================================================== */
+
+.photo-viewer{
+
+    position:fixed;
+
     inset:0;
-    background:
-        linear-gradient(
-            125deg,
-            transparent 20%,
-            rgba(255,226,146,.11) 48%,
-            transparent 62%
-        );
-    transform:translateX(-100%);
-    animation:shine 7s ease-in-out infinite;
+
+    width:100vw;
+    height:100dvh;
+
+    z-index:999999;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    margin:0;
+    padding:0;
+
+    background:#000;
+
+    overflow:hidden;
+
+    opacity:0;
+
+    transition:opacity .3s ease;
 }
 
-@keyframes shine{
-    0%,55%{transform:translateX(-100%);}
-    75%,100%{transform:translateX(100%);}
+.photo-viewer.active{
+    opacity:1;
 }
 
-.photo-caption{
-    text-align:center;
-    padding:13px 5px 8px;
+/*
+   LA FOTO AHORA USA TODA LA PANTALLA DISPONIBLE.
+   NO TIENE max-width NI max-height PEQUEÑOS.
+*/
+
+.photo-viewer img{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100vw;
+    height:100dvh;
+
+    max-width:none;
+    max-height:none;
+
+    margin:0;
+    padding:0;
+
+    display:block;
+
+    object-fit:contain;
+
+    border:none;
+    border-radius:0;
+
+    box-shadow:none;
+
+    background:#000;
+
+    animation:photoFullScreen .4s ease both;
+}
+
+@keyframes photoFullScreen{
+
+    from{
+        opacity:0;
+        transform:scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* =====================================================
+   TÍTULO DEL VISOR
+   ===================================================== */
+
+.viewer-title{
+
+    position:absolute;
+
+    top:18px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:5;
+
+    color:#dcb866;
+
     font-family:'Cinzel',serif;
-    font-size:10px;
+
+    font-size:11px;
+
     letter-spacing:3px;
-    color:#c9a957;
+
+    text-align:center;
+
+    white-space:nowrap;
+
+    padding:8px 15px;
+
+    border:1px solid rgba(226,194,105,.25);
+
+    border-radius:30px;
+
+    background:rgba(0,0,0,.48);
+
+    backdrop-filter:blur(8px);
+
+    text-shadow:
+        0 0 12px rgba(226,194,105,.35);
 }
 
+/* =====================================================
+   BOTÓN VOLVER
+   ===================================================== */
+
+.close-photo{
+
+    position:absolute;
+
+    left:50%;
+    bottom:22px;
+
+    transform:translateX(-50%);
+
+    z-index:10;
+
+    min-width:200px;
+
+    padding:14px 23px;
+
+    border-radius:40px;
+
+    border:1px solid rgba(226,190,92,.7);
+
+    background:rgba(5,5,5,.82);
+
+    color:#e9ca7a;
+
+    font-family:'Cinzel',serif;
+
+    font-size:12px;
+
+    letter-spacing:1px;
+
+    box-shadow:
+        0 0 25px rgba(223,184,80,.15);
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    transition:.3s ease;
+}
+
+.close-photo:hover{
+
+    box-shadow:
+        0 0 35px rgba(223,184,80,.3);
+
+    transform:
+        translateX(-50%)
+        translateY(-3px);
+}
+
+    /*
+       IMPORTANTE:
+       AQUÍ YA NO LIMITAMOS EL VISOR A 75vh.
+       LA FOTO PUEDE USAR TODA LA PANTALLA.
+    */
+
+    .photo-viewer{
+
+        width:100vw;
+        height:100dvh;
+
+        padding:0;
+    }
+
+    .photo-viewer img{
+
+        width:100vw;
+        height:100dvh;
+
+        max-width:none;
+        max-height:none;
+
+        object-fit:contain;
+
+        border-radius:0;
+    }
+
+    .viewer-title{
+
+        top:13px;
+
+        font-size:8px;
+
+        letter-spacing:1.6px;
+
+        max-width:90%;
+
+        white-space:normal;
+
+        line-height:1.5;
+    }
+
+    .close-photo{
+
+        bottom:17px;
+
+        min-width:190px;
+
+        padding:13px 18px;
+
+        font-size:10px;
+    }
+    }
 /* CARTA */
 .letter{
     position:relative;
@@ -531,27 +801,30 @@ body::before{
     </header>
 
 
-    <!-- RECUADRO SUPERIOR PARA LA IMAGEN -->
+    <section class="hero">
 
-    <section class="photo-card">
-
-        <div class="photo-frame">
-
-            <!-- CAMBIA "noah-octubre.jpg" POR EL NOMBRE DE TU IMAGEN -->
+        <div
+            class="hero-image"
+            id="photoFrame"
+            ondblclick="openPhoto()"
+        >
 
             <img
                 src="file_00000000b9d4822f9ef6fb2285a17c70.png"
                 alt="Un recuerdo especial"
             >
 
-        </div>
+            <div class="cat-mark">
+                🐾 ✦ 🐾
+            </div>
 
-        <div class="photo-caption">
-            UN PEQUEÑO PEDACITO DE MI AMOR PARA TI
+            <div class="photo-hint">
+                TOCA DOS VECES PARA VERLA GRANDE
+            </div>
+
         </div>
 
     </section>
-
 
     <!-- CARTA -->
 
