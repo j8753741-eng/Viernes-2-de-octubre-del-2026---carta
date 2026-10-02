@@ -928,6 +928,121 @@ body::before{
     </footer>
 
 </main>
+   
+    <!-- =====================================================
+     VISOR DE FOTO A PANTALLA COMPLETA
+     ===================================================== -->
+
+<div
+    class="photo-viewer"
+    id="photoViewer"
+>
+
+    <div class="viewer-title">
+        ✦ UN PEQUEÑO RECUERDO PARA OCTUBRE ✦
+    </div>
+
+
+    <img
+        src="file_00000000b9d4822f9ef6fb2285a17c70.png"
+        alt="Recuerdo especial"
+    >
+
+
+    <button
+        class="close-photo"
+        onclick="closePhoto()"
+    >
+        🐾 VOLVER A LA CARTA
+    </button>
+
+</div>
+    
+
+    <script>
+
+/* =====================================================
+   ABRIR FOTO A PANTALLA COMPLETA
+   ===================================================== */
+
+function openPhoto(){
+
+    const viewer =
+        document.getElementById("photoViewer");
+
+    viewer.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+
+    requestAnimationFrame(function(){
+
+        viewer.classList.add("active");
+
+    });
+
+}
+
+
+/* =====================================================
+   CERRAR FOTO
+   ===================================================== */
+
+function closePhoto(){
+
+    const viewer =
+        document.getElementById("photoViewer");
+
+    viewer.classList.remove("active");
+
+    setTimeout(function(){
+
+        viewer.style.display = "none";
+
+        document.body.style.overflow = "";
+
+    },300);
+
+}
+
+
+/* =====================================================
+   TOCAR FUERA DE LA FOTO
+   ===================================================== */
+
+document
+.getElementById("photoViewer")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target === this){
+
+            closePhoto();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   TECLA ESC
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closePhoto();
+
+        }
+
+    }
+);
+
+    </script>
 
 </body>
   </html>
